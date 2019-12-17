@@ -18,6 +18,7 @@ $(document).ready(function () {
     var choice4 = document.querySelector("#choice4");
     var answers = ["alerts", "parentheses", "all of the above", "quotes", "console.log"]
     var gameState;
+    var rightOrWrong = document.getElementById("rightwrong");
 
     startBtn.addEventListener("click", function () {
         startTimer();
@@ -28,9 +29,7 @@ $(document).ready(function () {
         console.log("clicked choice 1");
         if (this.textContent === answers[questionNum]) {
             console.log("correct");
-            questionNum++;
-            questionFill();
-            choiceFill();
+            correctAnswer();
             console.log(questionNum);
         } else {
             console.log("wrong!");
@@ -42,9 +41,7 @@ $(document).ready(function () {
         console.log("clicked choice 2");
         if (this.textContent === answers[questionNum]) {
             console.log("correct");
-            questionNum++;
-            questionFill();
-            choiceFill();
+            correctAnswer();
             console.log(questionNum);
         } else {
             console.log("wrong!");
@@ -57,9 +54,7 @@ $(document).ready(function () {
         console.log("clicked choice 3");
         if (this.textContent === answers[questionNum]) {
             console.log("correct");
-            questionNum++;
-            questionFill();
-            choiceFill();
+            correctAnswer();
             console.log(questionNum);
         } else {
             console.log("wrong!");
@@ -71,9 +66,7 @@ $(document).ready(function () {
         console.log("clicked choice 4");
         if (this.textContent === answers[questionNum]) {
             console.log("correct");
-            questionNum++;
-            questionFill();
-            choiceFill();
+            correctAnswer();
             console.log(questionNum);
         } else {
             console.log("wrong!");
@@ -115,6 +108,7 @@ $(document).ready(function () {
         timerDisplay.textContent = 0;
         timerSet();
         alert("Game over!")
+        rightOrWrong.textContent = "";
         startBtn.setAttribute("style", "display:block")
         startBtn.textContent = "Retry?";
     }
@@ -138,7 +132,6 @@ $(document).ready(function () {
     function questionFill() {
         console.log("I'm here!");
         questionText.textContent = questions[questionNum].title;
-
     }
 
     function choiceFill() {
@@ -151,27 +144,21 @@ $(document).ready(function () {
 
     function wrongAnswer() {
         timeRemaining = timeRemaining - 15;
+        rightOrWrong.textContent = "Wrong!";
         displayTime();
         if (timeRemaining <= 0) {
             stopTimer();
         }
     }
 
-
-
-
-
-
-    // if the user clicks a button that !== questions[questionNum].answer
-    // print "wrong" beneath the card
-    // subtract 15 seconds from timeRemaining
-    // else if
-    // the user clicks the button whose text matches the answer
-    // print "correct" beneath the card
-    // questionNum++
-    // questionFill();
-    // choiceFill();
-
-
-
+    function correctAnswer() {
+        questionNum++;
+        if (questionNum == answers.length) {
+            stopTimer();
+        } else {
+            rightOrWrong.textContent = "Correct!";
+            questionFill();
+            choiceFill();
+        }
+    }
 });
