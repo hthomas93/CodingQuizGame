@@ -12,16 +12,76 @@ $(document).ready(function () {
         ("#question-text");
     var choices = document.querySelector(".choice");
     var questionNum = 0;
-    var isCorrect;
     var choice1 = document.querySelector("#choice1");
     var choice2 = document.querySelector("#choice2");
     var choice3 = document.querySelector("#choice3");
     var choice4 = document.querySelector("#choice4");
+    var answers = ["alerts", "parentheses", "all of the above", "quotes", "console.log"]
+    var gameState;
 
     startBtn.addEventListener("click", function () {
         startTimer();
         console.log(gameState);
     })
+
+    choice1.addEventListener("click", function () {
+        console.log("clicked choice 1");
+        if (this.textContent === answers[questionNum]) {
+            console.log("correct");
+            questionNum++;
+            questionFill();
+            choiceFill();
+            console.log(questionNum);
+        } else {
+            console.log("wrong!");
+            wrongAnswer();
+        }
+
+    })
+    choice2.addEventListener("click", function () {
+        console.log("clicked choice 2");
+        if (this.textContent === answers[questionNum]) {
+            console.log("correct");
+            questionNum++;
+            questionFill();
+            choiceFill();
+            console.log(questionNum);
+        } else {
+            console.log("wrong!");
+            wrongAnswer();
+
+        }
+
+    })
+    choice3.addEventListener("click", function () {
+        console.log("clicked choice 3");
+        if (this.textContent === answers[questionNum]) {
+            console.log("correct");
+            questionNum++;
+            questionFill();
+            choiceFill();
+            console.log(questionNum);
+        } else {
+            console.log("wrong!");
+            wrongAnswer();
+        }
+
+    })
+    choice4.addEventListener("click", function () {
+        console.log("clicked choice 4");
+        if (this.textContent === answers[questionNum]) {
+            console.log("correct");
+            questionNum++;
+            questionFill();
+            choiceFill();
+            console.log(questionNum);
+        } else {
+            console.log("wrong!");
+            wrongAnswer();
+        }
+
+    })
+
 
     //FUNCTIONS
     //----------------------------------------------------
@@ -78,10 +138,7 @@ $(document).ready(function () {
     function questionFill() {
         console.log("I'm here!");
         questionText.textContent = questions[questionNum].title;
-        if (isCorrect === true) {
-            questionNum++;
-            console.log(questionNum);
-        }
+
     }
 
     function choiceFill() {
@@ -90,24 +147,31 @@ $(document).ready(function () {
         choice2.textContent = questions[questionNum].choices[1];
         choice3.textContent = questions[questionNum].choices[2];
         choice4.textContent = questions[questionNum].choices[3];
-
     }
-    // var i = 0;
-    // if answer = questions[i].answer
+
+    function wrongAnswer() {
+        timeRemaining = timeRemaining - 15;
+        displayTime();
+        if (timeRemaining <= 0) {
+            stopTimer();
+        }
+    }
 
 
 
-    // write a function that populates the button text with the questions object
-    // match questions.choices[i] to the ID of the button
 
-    // write a function to fill the question and button choices
 
-    // write a function to determine if an answer is correct
-    // if the button clicked matches the answer
-    // display "correct" below the card
-    // progress to the next question
-    // if the wrong button is clicked
-    // subtract 10 seconds from the timer
+
+    // if the user clicks a button that !== questions[questionNum].answer
+    // print "wrong" beneath the card
+    // subtract 15 seconds from timeRemaining
+    // else if
+    // the user clicks the button whose text matches the answer
+    // print "correct" beneath the card
+    // questionNum++
+    // questionFill();
+    // choiceFill();
+
 
 
 });
