@@ -19,57 +19,48 @@ $(document).ready(function () {
     var answers = ["alerts", "parentheses", "all of the above", "quotes", "console.log"]
     var gameState;
     var rightOrWrong = document.getElementById("rightwrong");
+    var userNames = [];
+    var userScores = [];
+    var highScores = [];
 
-    startBtn.addEventListener("click", function () {
+    startBtn.addEventListener("click", function (event) {
+        event.preventDefault;
         startTimer();
         console.log(gameState);
     })
 
     choice1.addEventListener("click", function () {
-        console.log("clicked choice 1");
         if (this.textContent === answers[questionNum]) {
-            console.log("correct");
             correctAnswer();
-            console.log(questionNum);
         } else {
-            console.log("wrong!");
             wrongAnswer();
         }
 
     })
+
     choice2.addEventListener("click", function () {
-        console.log("clicked choice 2");
         if (this.textContent === answers[questionNum]) {
-            console.log("correct");
             correctAnswer();
-            console.log(questionNum);
         } else {
-            console.log("wrong!");
             wrongAnswer();
 
         }
 
     })
+
     choice3.addEventListener("click", function () {
-        console.log("clicked choice 3");
         if (this.textContent === answers[questionNum]) {
-            console.log("correct");
             correctAnswer();
-            console.log(questionNum);
         } else {
-            console.log("wrong!");
             wrongAnswer();
         }
 
     })
+
     choice4.addEventListener("click", function () {
-        console.log("clicked choice 4");
         if (this.textContent === answers[questionNum]) {
-            console.log("correct");
             correctAnswer();
-            console.log(questionNum);
         } else {
-            console.log("wrong!");
             wrongAnswer();
         }
 
@@ -105,6 +96,7 @@ $(document).ready(function () {
 
     function stopTimer() {
         gameState = "not playing";
+        toHighScores();
         timerDisplay.textContent = 0;
         timerSet();
         alert("Game over!")
@@ -121,6 +113,7 @@ $(document).ready(function () {
     }
 
     function beginGame() {
+        questionNum = 0;
         if (gameState === "playing") {
             questionFill();
             choiceFill();
@@ -161,4 +154,29 @@ $(document).ready(function () {
             choiceFill();
         }
     }
+
+    function toHighScores() {
+        var userName = prompt("Enter your initials!");
+        userNames.unshift(userName);
+        var finalScore = (60 - timeRemaining);
+        userScores.unshift(finalScore);
+        userResults = { player: userName, score: finalScore }
+        highScores.push(userResults);
+        localStorage.setItem("scores", JSON.stringify(highScores));
+        var userNameResult = JSON.parse(localStorage.getItem("scores"));
+    }
+
+    function printToScoreBoard(obj) {
+        for (i = 0; i <= obj.length; i++) {
+            $("#scores-list").append("<p></p>").text(obj[i]);
+        }
+    }
+
+
+
+
+
+    //TO-DO
+    //prepend the new user and score to the #scores-list div
+    //have this stay constant despite the browser refreshing
 });

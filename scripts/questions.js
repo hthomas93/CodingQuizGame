@@ -27,3 +27,5 @@ var questions = [
         answer: "console.log"
     }
 ];
+
+var userScores = []
