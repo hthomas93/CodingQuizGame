@@ -19,14 +19,18 @@ $(document).ready(function () {
     var answers = ["alerts", "parentheses", "all of the above", "quotes", "console.log"]
     var gameState;
     var rightOrWrong = document.getElementById("rightwrong");
-    var userNames = [];
-    var userScores = [];
-    var highScores = [];
+    var highScores = JSON.parse(localStorage.getItem("scores") || "[]");
+    var clearBtn = document.querySelector("#clear-btn");
 
     startBtn.addEventListener("click", function (event) {
         event.preventDefault;
         startTimer();
         console.log(gameState);
+    })
+
+    clearBtn.addEventListener("click", function (event) {
+        event.preventDefault;
+        clearScores();
     })
 
     choice1.addEventListener("click", function () {
@@ -96,7 +100,7 @@ $(document).ready(function () {
 
     function stopTimer() {
         gameState = "not playing";
-        toHighScores();
+        saveHighScore();
         timerDisplay.textContent = 0;
         timerSet();
         alert("Game over!")
@@ -155,28 +159,33 @@ $(document).ready(function () {
         }
     }
 
-    function toHighScores() {
+    function saveHighScore() {
         var userName = prompt("Enter your initials!");
-        userNames.unshift(userName);
-        var finalScore = (60 - timeRemaining);
-        userScores.unshift(finalScore);
-        userResults = { player: userName, score: finalScore }
-        highScores.push(userResults);
+        var timeScore = (60 - timeRemaining);
+        console.log(userName);
+        console.log(timeScore);
+        highScores.push([userName, timeScore]);
+        console.log(highScores);
         localStorage.setItem("scores", JSON.stringify(highScores));
-        var userNameResult = JSON.parse(localStorage.getItem("scores"));
+        populateScores();
     }
 
-    function printToScoreBoard(obj) {
-        for (i = 0; i <= obj.length; i++) {
-            $("#scores-list").append("<p></p>").text(obj[i]);
-        }
+    function populateScores() {
+        $.each(highScores, function (i, value) {
+            var initials = value[0];
+            var score = value[1];
+            var userScore = $("<li>");
+            userScore.text(initials + ": " + score);
+            $("#scores-list").append(userScore);
+        });
+    }
+
+    function clearScores() {
+        highScores = [];
+        localStorage.setItem("scores", JSON.stringify(highScores));
+        //remove all of the list's children
+        $("#scores-list").empty();
     }
 
 
-
-
-
-    //TO-DO
-    //prepend the new user and score to the #scores-list div
-    //have this stay constant despite the browser refreshing
 });
